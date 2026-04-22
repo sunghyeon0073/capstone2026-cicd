@@ -8,28 +8,28 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: 소스코드 체크아웃
+      - name: checkout
         uses: actions/checkout@v4
 
-      - name: Docker Hub 로그인
+      - name: Docker Hub Login
         uses: docker/login-action@v3
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_TOKEN }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Backend Docker Build
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/capstone2026-backend:${{ github.sha }} ./backend
-          docker tag ${{ secrets.DOCKER_USERNAME }}/capstone2026-backend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/capstone2026-backend:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-backend:${{ github.sha }} ./backend
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-backend:latest
 
       - name: Frontend Docker Build
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/capstone2026-frontend:${{ github.sha }} ./frontend
-          docker tag ${{ secrets.DOCKER_USERNAME }}/capstone2026-frontend:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/capstone2026-frontend:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-frontend:${{ github.sha }} ./frontend
+          docker tag ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-frontend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-frontend:latest
 
       - name: Docker Hub Push
         run: |
-          docker push ${{ secrets.DOCKER_USERNAME }}/capstone2026-backend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/capstone2026-backend:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/capstone2026-frontend:${{ github.sha }}
-          docker push ${{ secrets.DOCKER_USERNAME }}/capstone2026-frontend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-backend:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-backend:latest
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-frontend:${{ github.sha }}
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/capstone2026-frontend:latest
